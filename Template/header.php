@@ -21,7 +21,30 @@
         <div class="collapse navbar-collapse mx-auto" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 mx-auto justify-content-between">
             </ul>
-            <button class="btn btn-outline-primary" type="submit"><i class="bi bi-person"></i>&nbsp;- Déjà Client ? - S'identifer</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="bi bi-person"></i>&nbsp;- Déjà Client ? - S'identifer
+            </button>
         </div>
     </div>
 </nav>
+
+<!-- Modal Connexion -->
+<div class="container-fluid">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Se connecter à son espace</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    // A venir
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-outline-success">Me connecter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

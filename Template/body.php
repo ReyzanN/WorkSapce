@@ -1,5 +1,5 @@
 <body>
-    <div class="container-fluid d-flex justify-content-center align-items-center flex-column" style="height: 50rem;">
+    <div class="container-fluid d-flex justify-content-center align-items-center flex-column" style="height: 50rem;" id="top-index">
         <h1 class="title-main-index align-middle">WorkSapce c'est quoi ?</h1>
         <h3 class="align-middle sub-sub-title-index">Une nouvelle méthode de travail</h3>
         <h2 class="title-sub-index">En savoir plus !</h2>
@@ -30,6 +30,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Ok, j'ai compris le principe, mais qui le développe ?</h5>
                     <p class="card-text">Une équipe de développeur, très réduite, puisqu'elle est composée de seulement : Un seul développeur.</p>
+                    <a href="?page=team"><button type="button" class="btn btn-primary">Voir l'équipe complète</button></a>
                 </div>
             </div>
             <div class="card">
@@ -39,15 +40,17 @@
                     <h5 class="card-title">Le projet est cool mais, combien ça coute ?</h5>
                     <p class="card-text">Nos tarifs, sont flexibles et s'adapte en fonction de vos besoins, nous avons aussi des tarifs fixe pour ceux voulant souscrire dans blabla.
                         Allant de 25 € à 1000 €.</p>
-                    <button type="button" class="btn btn-primary">Nos Tarifs</button>
+                    <a href="?page=prices"><button type="button" class="btn btn-primary">Nos Tarifs</button></a>
                 </div>
             </div>
             <div class="card">
-                <i class="bi bi-person-square card-img-top card-element-image-index text-center"></i>
+                <i class="bi bi-chat card-img-top card-element-image-index text-center"></i>
                 <hr>
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <h5 class="card-title">J'ai une question. Où vous contacter ?</h5>
+                    <p class="card-text">Vous pouvez, trouver un boutton juste en dessous pour nous contacter, cliquez dessus remplissez le formulaire et envoyez votre message sinon,
+                        envoyez un email à cette adresse : <strong>contact@reyzan.fr</strong></p>
+                    <a href="?page=message"><button type="button" class="btn btn-primary">Envoyer un message</button></a>
                 </div>
             </div>
         </div>
@@ -56,6 +59,5 @@
     <div class="container">
         <hr>
     </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
