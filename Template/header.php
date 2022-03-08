@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse mx-auto" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 mx-auto justify-content-between">
             </ul>
-            <button class="btn btn-outline-success" type="submit"><i class="bi bi-person"></i>&nbsp;- S'identifier</button>
+            <button class="btn btn-outline-primary" type="submit"><i class="bi bi-person"></i>&nbsp;- Déjà Client ? - S'identifer</button>
         </div>
     </div>
 </nav>

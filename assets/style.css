@@ -29,7 +29,16 @@
     cursor: pointer;
 }
 
+.sub-sub-title-index {
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
 .title-sub-index
 {
     margin-top: 1.5rem;
 }
+
+.card-element-image-index {
+    font-size: 4rem;
+ }
