@@ -1,6 +1,6 @@
 <body>
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column" style="height: 50rem;" id="top-index">
-        <h1 class="title-main-index align-middle">WorkSapce c'est quoi ?</h1>
+        <h1 class="title-main-index align-middle">WorkSpace c'est quoi ?</h1>
         <h3 class="align-middle sub-sub-title-index">Une nouvelle méthode de travail</h3>
         <h2 class="title-sub-index">En savoir plus !</h2>
         <a href="#knowmore"><i class="bi bi-arrow-down-circle bi-arrow-down-circle-index"></i></a>
@@ -50,7 +50,7 @@
                     <h5 class="card-title">J'ai une question. Où vous contacter ?</h5>
                     <p class="card-text">Vous pouvez, trouver un boutton juste en dessous pour nous contacter, cliquez dessus remplissez le formulaire et envoyez votre message sinon,
                         envoyez un email à cette adresse : <strong>contact@reyzan.fr</strong></p>
-                    <a href="?page=message"><button type="button" class="btn btn-primary">Envoyer un message</button></a>
+                    <a href="mailto:contact@reyzan.fr"><button type="button" class="btn btn-primary">Envoyer un message</button></a>
                 </div>
             </div>
         </div>
