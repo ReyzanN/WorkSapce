@@ -44,8 +44,12 @@ class MainCore{
         return session_destroy();
     }
 
+    public static function QuoteThings($things){
+        return $QUOTE = MainCore::$BaseConnect->quote($things);
+    }
+
     public static function GetIdAccount($email){
-        $EMAIL_QUOTE = MainCore::$BaseConnect->quote($email);
+        $EMAIL_QUOTE = self::QuoteThings($email);
         $SQL_SELECT_ID = "SELECT Id_users FROM users WHERE email = $EMAIL_QUOTE";
         $REQ_SELECT_ID = MainCore::$BaseConnect->query($SQL_SELECT_ID);
         $RES_SELECT_ID = $REQ_SELECT_ID->fetch();
@@ -57,6 +61,15 @@ class MainCore{
         $SQL_GET_INFO = "SELECT users.name, USERS.surname, USERS.birthdate, USERS.email FROM users WHERE Id_users = $ID_ACCOUNT";
         $REQ_GET_INFO = MainCore::$BaseConnect->query($SQL_GET_INFO);
         return $RES_GET_INFO = $REQ_GET_INFO->fetch();
+    }
+
+    public static function GetWorkSpaceForMembers($email){
+        $ID_ACCOUNT = self::GetIdAccount($email);
+        $SQL_SELECT_MEMBERS = "SELECT workspace.Name, owner.Id_users, ValidUsers.logs_date, users.surname FROM owner
+        INNER JOIN workspace W ON W.Id_WorkSpace = owner.Id_users
+        INNER JOIN users ON users.Id_users = owner.Id_users
+        INNER JOIN ValidUsers ON ValidUsers.Id_UsersAddAsk = $ID_ACCOUNT;
+        ";
     }
 
 }
