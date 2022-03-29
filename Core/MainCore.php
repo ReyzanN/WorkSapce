@@ -44,5 +44,20 @@ class MainCore{
         return session_destroy();
     }
 
+    public static function GetIdAccount($email){
+        $EMAIL_QUOTE = MainCore::$BaseConnect->quote($email);
+        $SQL_SELECT_ID = "SELECT Id_users FROM users WHERE email = $EMAIL_QUOTE";
+        $REQ_SELECT_ID = MainCore::$BaseConnect->query($SQL_SELECT_ID);
+        $RES_SELECT_ID = $REQ_SELECT_ID->fetch();
+        return $RES_SELECT_ID[0];
+    }
+
+    public static function GetInfoAccount($email){
+        $ID_ACCOUNT = self::GetIdAccount($email);
+        $SQL_GET_INFO = "SELECT users.name, USERS.surname, USERS.birthdate, USERS.email FROM users WHERE Id_users = $ID_ACCOUNT";
+        $REQ_GET_INFO = MainCore::$BaseConnect->query($SQL_GET_INFO);
+        return $RES_GET_INFO = $REQ_GET_INFO->fetch();
+    }
+
 }
 ?>

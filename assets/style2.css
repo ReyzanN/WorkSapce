@@ -1,0 +1,80 @@
+/* INFO */
+/* Author : REYZAN */
+/* @GaetanChamoret */
+
+/* Google Fonts */
+/* Font#1 -- Mukta [ Title index ] */    @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.title-main-index {
+    width: 50%;
+    padding: 0.1rem;
+    text-align: center;
+    font-family: 'Mukta', sans-serif;
+    font-size: 4rem;
+    color: rgba(17, 17, 17, 0.8);
+    border: 0.10em solid rgba(17, 17, 17, 0.75);
+    border-radius: 0.4rem;
+}
+
+.bi-person-badge_index {
+    font-size: 2.25rem;
+}
+
+.button-ask-more-index {
+    margin-top: 2rem;
+}
+
+.bi-arrow-down-circle-index {
+    font-size: 3.25rem;
+    cursor: pointer;
+}
+
+.sub-sub-title-index {
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+.title-sub-index
+{
+    margin-top: 1.5rem;
+}
+
+.card-element-image-index {
+    font-size: 4rem;
+}
+
+/* Account Page Main */
+
+.info-myaccount, .info2-myaccount, .info3-myaccount {
+    display: flex;
+    width: 30rem;
+    height: 12rem;
+    border-radius: 0.7rem;
+    position: relative;
+    top: 2rem;
+}
+
+.info-myaccount {
+    background-color: rgba(17, 17, 17, 0.3);
+}
+
+.info2-myaccount {
+    background-color: rgba(13, 110, 253, 0.75);
+}
+
+.info3-myaccount {
+    background-color: rgba(25, 135, 84, 0.75);
+}
+
+.image-card-edit-account-main {
+    font-size: 7rem;
+}
+
+.second-part-main-account hr {
+    margin-top: 3rem;
+}
