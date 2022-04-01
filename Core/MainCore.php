@@ -72,7 +72,16 @@ class MainCore{
 
     public static function GetInfoWorkSpaceForMembers($email){
         $ID_ACCOUNT = self::GetIdAccount($email);
-        $SQL_SELECT_INFO = "";
+        $SQL_SELECT_INFO = "SELECT suscriberworkspace_user.Id_WorkSpace, workspace.name, validusers.logs_date, users.Name, users.surname
+        FROM suscriberworkspace_user
+        INNER JOIN usersaddask ON usersaddask.Id_WorkSpace = suscriberworkspace_user.Id_WorkSpace
+        INNER JOIN workspace ON workspace.Id_WorkSpace = usersaddask.Id_WorkSpace
+        INNER JOIN owner ON owner.Id_WorkSpace = workspace.Id_WorkSpace
+        INNER JOIN validusers ON validusers.Id_UsersAddAsk = usersaddask.Id_UsersAddAsk
+        INNER JOIN users ON users.Id_users = owner.Id_users
+        WHERE suscriberworkspace_user.Id_UsersAddAsk = $ID_ACCOUNT;";
+        $REQ_SELECT_INFO = MainCore::$BaseConnect->query($SQL_SELECT_INFO);
+        return $RES_SELECT_INFO = $REQ_SELECT_INFO->fetchAll();
     }
 
 }

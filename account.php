@@ -14,6 +14,7 @@ $footerAccount = 'pages/footer-account.php';
 
 $InfoUsers = $Core->GetInfoAccount($_SESSION['email']);
 $NumbersWorkSpace = $Core->GetNumbersWorkSpaceForMembers($_SESSION['email']);
+$InfoWorkSpaceUsers = $Core->GetInfoWorkSpaceForMembers($_SESSION['email']);
 include($headerAccount);
 include($sideBarAccount);
 if (isset($_REQUEST['page'])){

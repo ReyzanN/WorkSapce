@@ -129,13 +129,19 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><a href="#" class="text-primary fw-bold">OUI</a></td>
-                                        <td>OUI</td>
-                                        <td class="fw-bold">OUI</td>
-                                        <td>OUI</td>
-                                        <td><button class="btn-outline-success btn" type="button">OUI</button></td>
-                                    </tr>
+                                    <?php
+                                        foreach ($InfoWorkSpaceUsers as $InfoWorkSpace){
+                                    ?>
+                                        <tr>
+                                            <td><a href="#" class="text-primary fw-bold"><?php echo $InfoWorkSpace[0] ?></a></td>
+                                            <td><?php echo $InfoWorkSpace[1] ?></td>
+                                            <td class="fw-bold"><?php echo $InfoWorkSpace[3]."&nbsp;".$InfoWorkSpace[4]  ?></td>
+                                            <td><?php echo $InfoWorkSpace[2] ?></td>
+                                            <td><button class="btn btn-success btn" type="button">Accès à l'espace</button></td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
                                     </tbody>
                                 </table>
 
@@ -152,21 +158,8 @@
 
                 <!-- Recent Activity -->
                 <div class="card">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Filter</h6>
-                            </li>
-
-                            <li><a class="dropdown-item" href="#">Today</a></li>
-                            <li><a class="dropdown-item" href="#">This Month</a></li>
-                            <li><a class="dropdown-item" href="#">This Year</a></li>
-                        </ul>
-                    </div>
-
                     <div class="card-body">
-                        <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+                        <h5 class="card-title">Activitées du compte <span>| Tous</span></h5>
 
                         <div class="activity">
 
@@ -225,21 +218,8 @@
 
                 <!-- News & Updates Traffic -->
                 <div class="card">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Filter</h6>
-                            </li>
-
-                            <li><a class="dropdown-item" href="#">Today</a></li>
-                            <li><a class="dropdown-item" href="#">This Month</a></li>
-                            <li><a class="dropdown-item" href="#">This Year</a></li>
-                        </ul>
-                    </div>
-
                     <div class="card-body pb-0">
-                        <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+                        <h5 class="card-title">Nouveauté &amp; Mise à jours <span>| Tous</span></h5>
 
                         <div class="news">
                             <div class="post-item clearfix">
