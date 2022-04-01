@@ -52,7 +52,7 @@
                                         <i class="bi bi-person-workspace"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>12</h6>
+                                        <h6><?php echo $NumbersWorkSpace[0] ?></h6>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                     <div class="col-12">
                         <div class="card top-selling overflow-auto">
                             <div class="card-body pb-0">
-                                <h5 class="card-title">WorkSpace dont je suis membre</h5>
+                                <h5 class="card-title">Espace dont je suis membre</h5>
 
                                 <table class="table table-borderless">
                                     <thead>
@@ -130,11 +130,11 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
-                                        <td><a href="#" class="text-primary fw-bold"></a></td>
-                                        <td></td>
-                                        <td class="fw-bold"></td>
-                                        <td></td>
+                                        <td><a href="#" class="text-primary fw-bold">OUI</a></td>
+                                        <td>OUI</td>
+                                        <td class="fw-bold">OUI</td>
+                                        <td>OUI</td>
+                                        <td><button class="btn-outline-success btn" type="button">OUI</button></td>
                                     </tr>
                                     </tbody>
                                 </table>

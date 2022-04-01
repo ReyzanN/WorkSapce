@@ -63,13 +63,16 @@ class MainCore{
         return $RES_GET_INFO = $REQ_GET_INFO->fetch();
     }
 
-    public static function GetWorkSpaceForMembers($email){
+    public static function GetNumbersWorkSpaceForMembers($email){
         $ID_ACCOUNT = self::GetIdAccount($email);
-        $SQL_SELECT_MEMBERS = "SELECT workspace.Name, owner.Id_users, ValidUsers.logs_date, users.surname FROM owner
-        INNER JOIN workspace W ON W.Id_WorkSpace = owner.Id_users
-        INNER JOIN users ON users.Id_users = owner.Id_users
-        INNER JOIN ValidUsers ON ValidUsers.Id_UsersAddAsk = $ID_ACCOUNT;
-        ";
+        $SQL_SELECT_Numbers_WOKSPACE_FOR_USERS = "SELECT count(*) FROM validusers INNER JOIN usersaddask ON usersaddask.Id_UsersAddAsk = validusers.Id_UsersAddAsk WHERE usersaddask.Id_UsersAddAsk = $ID_ACCOUNT";
+        $REQ_SELECT_Numbers_WOKSPACE_FOR_USERS = MainCore::$BaseConnect->query($SQL_SELECT_Numbers_WOKSPACE_FOR_USERS);
+        return $RES_SELECT_Numbers_WOKSPACE_FOR_USERS = $REQ_SELECT_Numbers_WOKSPACE_FOR_USERS->fetch();
+    }
+
+    public static function GetInfoWorkSpaceForMembers($email){
+        $ID_ACCOUNT = self::GetIdAccount($email);
+        $SQL_SELECT_INFO = "";
     }
 
 }

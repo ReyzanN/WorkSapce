@@ -13,6 +13,7 @@ $bodyDefaultAccount = 'pages/body-account.php';
 $footerAccount = 'pages/footer-account.php';
 
 $InfoUsers = $Core->GetInfoAccount($_SESSION['email']);
+$NumbersWorkSpace = $Core->GetNumbersWorkSpaceForMembers($_SESSION['email']);
 include($headerAccount);
 include($sideBarAccount);
 if (isset($_REQUEST['page'])){
