@@ -70,6 +70,12 @@ class MainCore{
         return $RES_SELECT_Numbers_WOKSPACE_FOR_USERS = $REQ_SELECT_Numbers_WOKSPACE_FOR_USERS->fetch();
     }
 
+    public function GetNumbersMembersAll(){
+        $SQL_COUNT_MEMBERS = "SELECT count(*) FROM users";
+        $REQ_COUNT_MEMBERS = MainCore::$BaseConnect->query($SQL_COUNT_MEMBERS);
+        return $RES_COUNT_MEMBERS = $REQ_COUNT_MEMBERS->fetch();
+    }
+
     public static function GetInfoWorkSpaceForMembers($email){
         $ID_ACCOUNT = self::GetIdAccount($email);
         $SQL_SELECT_INFO = "SELECT suscriberworkspace_user.Id_WorkSpace, workspace.name, validusers.logs_date, users.Name, users.surname
