@@ -2,28 +2,24 @@
 session_start();
 if (!isset($_SESSION['email'])){
     header('Location: index.php');
+    exit();
 }
-require_once ('Core/MainCore.php');
 
+// Patch Erreur Missing Header info Account
+include ('Core/MainCore.php');
 $Core = MainCore::Main_ConnectDB();
 
 $headerAccount = 'pages/header-account.php';
 $sideBarAccount = 'pages/sidebar-account.php';
-$bodyDefaultAccount = 'pages/body-account.php';
 $footerAccount = 'pages/footer-account.php';
 
 $InfoUsers = $Core->GetInfoAccount($_SESSION['email']);
-$NumbersWorkSpace = $Core->GetNumbersWorkSpaceForMembers($_SESSION['email']);
 $InfoWorkSpaceUsers = $Core->GetInfoWorkSpaceForMembers($_SESSION['email']);
-$InfoNumbersUsers = $Core->GetNumbersMembersAll();
 include($headerAccount);
 include($sideBarAccount);
-if (isset($_REQUEST['page'])){
-    $page = $_REQUEST['page'];
-    include ('pages/'.$page.'.php');
-}
-else {
-    include($bodyDefaultAccount);
+if (isset($_REQUEST['param'])){
+    $param = $_REQUEST['param'];
+    include ('Control/account_control.php');
 }
 include ($footerAccount);
 ?>

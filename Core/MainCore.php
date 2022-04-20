@@ -67,7 +67,12 @@ class MainCore{
         $ID_ACCOUNT = self::GetIdAccount($email);
         $SQL_SELECT_Numbers_WOKSPACE_FOR_USERS = "SELECT count(*) FROM validusers INNER JOIN usersaddask ON usersaddask.Id_UsersAddAsk = validusers.Id_UsersAddAsk WHERE usersaddask.Id_UsersAddAsk = $ID_ACCOUNT";
         $REQ_SELECT_Numbers_WOKSPACE_FOR_USERS = MainCore::$BaseConnect->query($SQL_SELECT_Numbers_WOKSPACE_FOR_USERS);
-        return $RES_SELECT_Numbers_WOKSPACE_FOR_USERS = $REQ_SELECT_Numbers_WOKSPACE_FOR_USERS->fetch();
+        if ($REQ_SELECT_Numbers_WOKSPACE_FOR_USERS){
+            return $RES_SELECT_Numbers_WOKSPACE_FOR_USERS = $REQ_SELECT_Numbers_WOKSPACE_FOR_USERS->fetch();
+        }
+        else{
+            return $RES_SELECT_Numbers_WOKSPACE_FOR_USERS = [0];
+        }
     }
 
     public function GetNumbersMembersAll(){
@@ -75,6 +80,8 @@ class MainCore{
         $REQ_COUNT_MEMBERS = MainCore::$BaseConnect->query($SQL_COUNT_MEMBERS);
         return $RES_COUNT_MEMBERS = $REQ_COUNT_MEMBERS->fetch();
     }
+
+    // A refaire pour prendre en compte la nouvelle gestion BDD
 
     public static function GetInfoWorkSpaceForMembers($email){
         $ID_ACCOUNT = self::GetIdAccount($email);
@@ -87,8 +94,18 @@ class MainCore{
         INNER JOIN users ON users.Id_users = owner.Id_users
         WHERE suscriberworkspace_user.Id_UsersAddAsk = $ID_ACCOUNT;";
         $REQ_SELECT_INFO = MainCore::$BaseConnect->query($SQL_SELECT_INFO);
-        return $RES_SELECT_INFO = $REQ_SELECT_INFO->fetchAll();
+        //return $RES_SELECT_INFO = $REQ_SELECT_INFO->fetchAll();
     }
+
+    public static function GetInvitationPending($email){
+        $ID_ACCOUNT = self::GetIdAccount($email);
+        $SQL_SELECT = "SELECT usersaddask.id, users.name, users.surname, workspace.Name FROM usersaddask
+        INNER JOIN users ON users.Id_users = usersaddask.Id_users
+        INNER JOIN workspace ON workspace.Id_WorkSpace = usersaddask.Id_WorkSpace
+        WHERE usersaddask.active = 1 AND usersaddask.Id_users = $ID_ACCOUNT[0]";
+    }
+
+    // FIN
 
 }
 ?>

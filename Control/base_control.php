@@ -14,22 +14,19 @@ if (isset($_REQUEST['param'])){
             $ValidConnect = $MainDB->Main_ConnectUsers($login,$pass);
             if ($ValidConnect == 1){
                 $_SESSION['email'] = $login;
-                header('Location: ../account.php');
+                header('Location: ../account.php?param=default');
+                exit();
             }
             else{
                 header('Location: ../index.php');
+                exit();
             }
-            break;
-        }
-
-        case 'UsersDisconnect':{
-            $MainDB->Main_DisconnectUsers();
-            header('Location: ../index.php');
             break;
         }
 
         default:{
             header('Location: ../index.php');
+            exit();
             break;
         }
     }

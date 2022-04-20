@@ -5,7 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/style.css">
     <link rel='icon' href="assets/img/NavLogoFav.png">
-    <title>WorkSpace - MyAccount</title>
+    <title>WorkSpace - Mon Compte</title>
 </head>
 <nav>
 
@@ -211,7 +211,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="Control/base_control.php?param=UsersDisconnect">
+                        <a class="dropdown-item d-flex align-items-center" href="account.php?param=UsersDisconnect">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Me Déconnecter</span>
                         </a>
