@@ -97,13 +97,28 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row"><a href="#"></a></th>
-                                        <td></td>
-                                        <td><a href="#" class="text-primary"></a></td>
-                                        <td></td>
-                                        <td><span class="badge bg-success"></span></td>
-                                    </tr>
+                                    <?php
+                                     foreach ($JoinRequest as $Request){
+                                    ?>
+                                         <tr>
+                                             <th scope="row"><a href="#"><?php echo $Request[0] ?></a></th>
+                                             <td><?php echo $Request[2]." ".$Request[1] ?></td>
+                                             <td><a href="#" class="text-primary"><?php echo $Request[3]?></a></td>
+                                             <td></td>
+                                             <?php if ($Request[5] == 1){?>
+                                                 <td><span class="badge bg-danger"><?php echo $Request[4] ?></span></td>
+                                             <?php
+                                             }elseif($Request[5] == 2) { ?>
+                                             <td><span class="badge bg-sucess"><?php echo $Request[4] ?></span></td>
+                                             <?php
+                                             }elseif ($Request[5] == 3){
+                                             ?>
+                                             <td><span class="badge bg-warning"><?php echo $Request[4] ?></span></td>
+
+                                         </tr>
+                                    <?php
+                                     }}
+                                     ?>
                                     </tbody>
                                 </table>
 
@@ -135,8 +150,8 @@
                                         <tr>
                                             <td><a href="#" class="text-primary fw-bold"><?php echo $InfoWorkSpace[0] ?></a></td>
                                             <td><?php echo $InfoWorkSpace[1] ?></td>
-                                            <td class="fw-bold"><?php echo $InfoWorkSpace[3]."&nbsp;".$InfoWorkSpace[4]  ?></td>
-                                            <td><?php echo $InfoWorkSpace[2] ?></td>
+                                            <td class="fw-bold"><?php echo $InfoWorkSpace[3]."&nbsp;".$InfoWorkSpace[2]  ?></td>
+                                            <td><?php echo $InfoWorkSpace[4] ?></td>
                                             <td><button class="btn btn-success btn" type="button">Accès à l'espace</button></td>
                                         </tr>
                                     <?php

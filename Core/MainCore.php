@@ -65,7 +65,7 @@ class MainCore{
 
     public static function GetNumbersWorkSpaceForMembers($email){
         $ID_ACCOUNT = self::GetIdAccount($email);
-        $SQL_SELECT_Numbers_WOKSPACE_FOR_USERS = "SELECT count(*) FROM validusers INNER JOIN usersaddask ON usersaddask.Id_UsersAddAsk = validusers.Id_UsersAddAsk WHERE usersaddask.Id_UsersAddAsk = $ID_ACCOUNT";
+        $SQL_SELECT_Numbers_WOKSPACE_FOR_USERS = "SELECT count(*) FROM joinrequest_users WHERE Id_usersRequested = $ID_ACCOUNT AND Id_JoinStatut = 2";
         $REQ_SELECT_Numbers_WOKSPACE_FOR_USERS = MainCore::$BaseConnect->query($SQL_SELECT_Numbers_WOKSPACE_FOR_USERS);
         if ($REQ_SELECT_Numbers_WOKSPACE_FOR_USERS){
             return $RES_SELECT_Numbers_WOKSPACE_FOR_USERS = $REQ_SELECT_Numbers_WOKSPACE_FOR_USERS->fetch();
@@ -81,31 +81,38 @@ class MainCore{
         return $RES_COUNT_MEMBERS = $REQ_COUNT_MEMBERS->fetch();
     }
 
-    // A refaire pour prendre en compte la nouvelle gestion BDD
-
     public static function GetInfoWorkSpaceForMembers($email){
         $ID_ACCOUNT = self::GetIdAccount($email);
-        $SQL_SELECT_INFO = "SELECT suscriberworkspace_user.Id_WorkSpace, workspace.name, validusers.logs_date, users.Name, users.surname
-        FROM suscriberworkspace_user
-        INNER JOIN usersaddask ON usersaddask.Id_WorkSpace = suscriberworkspace_user.Id_WorkSpace
-        INNER JOIN workspace ON workspace.Id_WorkSpace = usersaddask.Id_WorkSpace
-        INNER JOIN owner ON owner.Id_WorkSpace = workspace.Id_WorkSpace
-        INNER JOIN validusers ON validusers.Id_UsersAddAsk = usersaddask.Id_UsersAddAsk
-        INNER JOIN users ON users.Id_users = owner.Id_users
-        WHERE suscriberworkspace_user.Id_UsersAddAsk = $ID_ACCOUNT;";
+        $SQL_SELECT_INFO = "SELECT joinrequest_users.Id_WorkSpace, workspace.Name, users.name, users.surname, joinrequest_users.DateJoin FROM joinrequest_users
+        INNER JOIN workspace ON workspace.Id_WorkSpace = joinrequest_users.Id_WorkSpace
+        INNER JOIN owner ON owner.Id_WorkSpace = joinrequest_users.Id_WorkSpace
+        INNER JOIN users ON users.Id_users = owner.Id_WorkSpace
+        WHERE joinrequest_users.Id_usersRequested = $ID_ACCOUNT[0] AND joinrequest_users.Id_JoinStatut = 2;";
         $REQ_SELECT_INFO = MainCore::$BaseConnect->query($SQL_SELECT_INFO);
-        //return $RES_SELECT_INFO = $REQ_SELECT_INFO->fetchAll();
+        if ($REQ_SELECT_INFO){
+            return $RES_SELECT_INFO = $REQ_SELECT_INFO->fetchAll();
+        }
+        else{
+            return "";
+        }
     }
 
-    public static function GetInvitationPending($email){
+    public static function GetInvitationPendingAndRefused($email){
         $ID_ACCOUNT = self::GetIdAccount($email);
-        $SQL_SELECT = "SELECT usersaddask.id, users.name, users.surname, workspace.Name FROM usersaddask
-        INNER JOIN users ON users.Id_users = usersaddask.Id_users
-        INNER JOIN workspace ON workspace.Id_WorkSpace = usersaddask.Id_WorkSpace
-        WHERE usersaddask.active = 1 AND usersaddask.Id_users = $ID_ACCOUNT[0]";
+        $SQL_SELECT = "SELECT joinrequest_users.Id_JoinAsk, users.name, users.surname, workspace.Name, joinstatut.Status, joinstatut.Id_JoinStatut FROM joinrequest_users
+        INNER JOIN users ON users.Id_users = joinrequest_users.Id_users
+        INNER JOIN workspace ON workspace.Id_Workspace = joinrequest_users.Id_WorkSpace
+        INNER JOIN joinstatut ON joinstatut.Id_JoinStatut = joinrequest_users.Id_JoinStatut
+        WHERE joinrequest_users.Id_usersRequested = $ID_ACCOUNT AND joinrequest_users.Id_JoinStatut IN (1,3)";
+        $REQ_SELECT = MainCore::$BaseConnect->query($SQL_SELECT);
+        if ($REQ_SELECT){
+            return $RES_SELECT = $REQ_SELECT->fetchAll();
+        }
+        else{
+            return "";
+        }
     }
 
-    // FIN
 
 }
 ?>
