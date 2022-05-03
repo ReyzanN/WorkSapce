@@ -124,6 +124,10 @@ class MainCore{
         return $REQ_PREP->fetch();
     }
 
+    public static function IsMemberOfWorkSpace($IdWorkSpace,$email){
+        // A faire
+    }
+
 
 }
 ?>

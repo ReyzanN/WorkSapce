@@ -6,7 +6,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Tableau de Bord</h1>
+        <h1>WorkSpace</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="account.php">Acceuil</a></li>
@@ -97,26 +97,26 @@
                                     </thead>
                                     <tbody>
                                     <?php
-                                     foreach ($JoinRequest as $Request){
-                                    ?>
-                                         <tr>
-                                             <th scope="row"><a href="#"><?php echo $Request[0] ?></a></th>
-                                             <td><?php echo $Request[2]." ".$Request[1] ?></td>
-                                             <td><a href="#" class="text-primary"><?php echo $Request[3]?></a></td>
-                                             <?php if ($Request[5] == 1){?>
-                                                 <td><span class="badge bg-danger"><?php echo $Request[4] ?></span></td>
-                                             <?php
-                                             }elseif($Request[5] == 2) { ?>
-                                             <td><span class="badge bg-success"><?php echo $Request[4] ?></span></td>
-                                             <?php
-                                             }elseif ($Request[5] == 3){
-                                             ?>
-                                             <td><span class="badge bg-warning"><?php echo $Request[4] ?></span></td>
+                                    foreach ($JoinRequest as $Request){
+                                        ?>
+                                        <tr>
+                                        <th scope="row"><a href="#"><?php echo $Request[0] ?></a></th>
+                                        <td><?php echo $Request[2]." ".$Request[1] ?></td>
+                                        <td><a href="#" class="text-primary"><?php echo $Request[3]?></a></td>
+                                        <?php if ($Request[5] == 1){?>
+                                            <td><span class="badge bg-danger"><?php echo $Request[4] ?></span></td>
+                                            <?php
+                                        }elseif($Request[5] == 2) { ?>
+                                            <td><span class="badge bg-success"><?php echo $Request[4] ?></span></td>
+                                            <?php
+                                        }elseif ($Request[5] == 3){
+                                            ?>
+                                            <td><span class="badge bg-warning"><?php echo $Request[4] ?></span></td>
 
-                                         </tr>
-                                    <?php
-                                     }}
-                                     ?>
+                                            </tr>
+                                            <?php
+                                        }}
+                                    ?>
                                     </tbody>
                                 </table>
 
@@ -143,8 +143,8 @@
                                     </thead>
                                     <tbody>
                                     <?php
-                                        foreach ($InfoWorkSpaceUsers as $InfoWorkSpace){
-                                    ?>
+                                    foreach ($InfoWorkSpaceUsers as $InfoWorkSpace){
+                                        ?>
                                         <tr>
                                             <td><a href="#" class="text-primary fw-bold"><?php echo $InfoWorkSpace[0] ?></a></td>
                                             <td><?php echo $InfoWorkSpace[1] ?></td>
@@ -152,8 +152,8 @@
                                             <td><?php echo $InfoWorkSpace[4] ?></td>
                                             <td><button class="btn btn-success btn" type="button"><a href='account.php?param=WorkSpace&WorkSpaceAccess=<?php echo $InfoWorkSpace[0]?>' style='color: white'>Accès à l'espace</a></button></td>
                                         </tr>
-                                    <?php
-                                        }
+                                        <?php
+                                    }
                                     ?>
                                     </tbody>
                                 </table>

@@ -21,10 +21,25 @@ if (isset($_REQUEST['param'])){
             exit();
         }
 
+        case 'WorkSpace':{
+            include ("pages/workspace-main.php");
+            break;
+        }
+
         default:{
+            $headerAccount = 'pages/header-account.php';
+            $sideBarAccount = 'pages/sidebar-account.php';
+            $footerAccount = 'pages/footer-account.php';
+            $InfoUsers = $Core->GetInfoAccount($_SESSION['email']);
+            $InfoWorkSpaceUsers = $Core->GetInfoWorkSpaceForMembers($_SESSION['email']);
+            $JoinRequest = $Core->GetInvitationAll($_SESSION['email']);
+            $CountPending = $Core->GetCountPendingJoinRequest($_SESSION['email']);
             $NumbersWorkSpace = $Core->GetNumbersWorkSpaceForMembers($_SESSION['email']);
             $InfoNumbersUsers = $Core->GetNumbersMembersAll();
+            include($headerAccount);
+            include($sideBarAccount);
             include ("pages/body-account.php");
+            include ($footerAccount);
             break;
         }
     }
