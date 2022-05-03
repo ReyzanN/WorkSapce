@@ -15,7 +15,8 @@ $footerAccount = 'pages/footer-account.php';
 
 $InfoUsers = $Core->GetInfoAccount($_SESSION['email']);
 $InfoWorkSpaceUsers = $Core->GetInfoWorkSpaceForMembers($_SESSION['email']);
-$JoinRequest = $Core->GetInvitationPendingAndRefused($_SESSION['email']);
+$JoinRequest = $Core->GetInvitationAll($_SESSION['email']);
+$CountPending = $Core->GetCountPendingJoinRequest($_SESSION['email']);
 include($headerAccount);
 include($sideBarAccount);
 if (isset($_REQUEST['param'])){

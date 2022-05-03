@@ -97,13 +97,13 @@ class MainCore{
         }
     }
 
-    public static function GetInvitationPendingAndRefused($email){
+    public static function GetInvitationAll($email){
         $ID_ACCOUNT = self::GetIdAccount($email);
         $SQL_SELECT = "SELECT joinrequest_users.Id_JoinAsk, users.name, users.surname, workspace.Name, joinstatut.Status, joinstatut.Id_JoinStatut FROM joinrequest_users
         INNER JOIN users ON users.Id_users = joinrequest_users.Id_users
         INNER JOIN workspace ON workspace.Id_Workspace = joinrequest_users.Id_WorkSpace
         INNER JOIN joinstatut ON joinstatut.Id_JoinStatut = joinrequest_users.Id_JoinStatut
-        WHERE joinrequest_users.Id_usersRequested = $ID_ACCOUNT AND joinrequest_users.Id_JoinStatut IN (1,3)";
+        WHERE joinrequest_users.Id_usersRequested = $ID_ACCOUNT";
         $REQ_SELECT = MainCore::$BaseConnect->query($SQL_SELECT);
         if ($REQ_SELECT){
             return $RES_SELECT = $REQ_SELECT->fetchAll();
@@ -111,6 +111,17 @@ class MainCore{
         else{
             return "";
         }
+    }
+
+    public static function GetCountPendingJoinRequest($email){
+        $ID_ACCOUNT = self::GetIdAccount($email);
+        $STAT = 3;
+        $SQL_SELECT = "SELECT Count(*) AS NumberPendingAsk FROM joinrequest_users WHERE Id_usersRequested = :user AND Id_JoinStatut = :stat";
+        $REQ_PREP = MainCore::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_PREP->bindParam(':user', $ID_ACCOUNT, PDO::PARAM_INT);
+        $REQ_PREP->bindParam(':stat', $STAT, PDO::PARAM_INT);
+        $REQ_PREP->execute();
+        return $REQ_PREP->fetch();
     }
 
 

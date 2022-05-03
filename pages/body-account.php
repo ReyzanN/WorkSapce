@@ -71,7 +71,7 @@
                                         <i class="bi bi-hourglass-top"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>10</h6>
+                                        <h6><?php echo $CountPending[0] ?></h6>
                                     </div>
                                 </div>
 
@@ -92,7 +92,6 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Faite Par</th>
                                         <th scope="col">WorkSpace</th>
-                                        <th scope="col">Nombre de Membre</th>
                                         <th scope="col">Status</th>
                                     </tr>
                                     </thead>
@@ -104,12 +103,11 @@
                                              <th scope="row"><a href="#"><?php echo $Request[0] ?></a></th>
                                              <td><?php echo $Request[2]." ".$Request[1] ?></td>
                                              <td><a href="#" class="text-primary"><?php echo $Request[3]?></a></td>
-                                             <td></td>
                                              <?php if ($Request[5] == 1){?>
                                                  <td><span class="badge bg-danger"><?php echo $Request[4] ?></span></td>
                                              <?php
                                              }elseif($Request[5] == 2) { ?>
-                                             <td><span class="badge bg-sucess"><?php echo $Request[4] ?></span></td>
+                                             <td><span class="badge bg-success"><?php echo $Request[4] ?></span></td>
                                              <?php
                                              }elseif ($Request[5] == 3){
                                              ?>
