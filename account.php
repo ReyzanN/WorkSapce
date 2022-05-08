@@ -8,5 +8,7 @@ if (!isset($_SESSION['email'])){
 if (isset($_REQUEST['param'])){
     $param = $_REQUEST['param'];
     include ('Control/account_control.php');
+}else{
+    header('Location: account.php?param=default');
 }
 ?>

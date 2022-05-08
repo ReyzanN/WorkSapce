@@ -4,7 +4,6 @@
  */
 require_once ('Core/MainCore.php');
 $Core = MainCore::Main_ConnectDB();
-session_start();
 if (!isset($_SESSION['email'])){
     header('Location: index.php');
     exit();
@@ -17,12 +16,25 @@ if (isset($_REQUEST['param'])){
         case 'UsersDisconnect':{
             $Core->Main_DisconnectUsers();
             echo '<meta http-equiv="refresh" content="0">';
-            header('Location: ../index.php');
+            header('Location: index.php');
             exit();
         }
 
         case 'WorkSpace':{
-            include ("pages/workspace-main.php");
+            $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
+            if ($MemberTest){
+                $InfoUsers = $Core->GetInfoAccount($_SESSION['email']);
+                $InfoWorkSpace = $Core->GetNameWorkSpace($_REQUEST['WorkSpaceAccess']);
+                $HeaderMessage = $Core->GetHeaderMessageForWorkSpace($_REQUEST['WorkSpaceAccess']);
+                $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                include ("pages/workspace-header.php");
+                include ("pages/workspace-sidebar.php");
+                include ("pages/workspace-body.php");
+                include ("pages/workspace-footer.php");
+            }
+            else{
+                header('Location: account.php?param=default');
+            }
             break;
         }
 

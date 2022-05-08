@@ -125,7 +125,48 @@ class MainCore{
     }
 
     public static function IsMemberOfWorkSpace($IdWorkSpace,$email){
-        // A faire
+        $ID_ACCOUNT = self::GetIdAccount($email);
+        $STAT = 2;
+        $SQL_SELECT = "SELECT * FROM joinrequest_users WHERE Id_usersRequested = :user AND Id_JoinStatut = :stat AND Id_WorkSpace = :workspace";
+        $REQ_SELECT = MainCore::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':user', $ID_ACCOUNT, PDO::PARAM_INT);
+        $REQ_SELECT->bindParam(':stat', $STAT, PDO::PARAM_INT);
+        $REQ_SELECT->bindParam(':workspace', $IdWorkSpace, PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        $RES_SELECT = $REQ_SELECT->rowCount();
+
+        if ($RES_SELECT >= 1){
+            return $RES = 1;
+        }
+        else {
+            return $RES = 0;
+        }
+    }
+
+    public static function GetNameWorkSpace($IdWorkSpace){
+        $SQL_SELECT = "SELECT workspace.Name FROM workspace WHERE Id_WorkSpace = :workspace";
+        $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':workspace', $IdWorkSpace, PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        return $REQ_SELECT->fetch();
+    }
+
+    public static function GetHeaderMessageForWorkSpace($IdWorkSpace){
+        $SQL_SELECT = "SELECT Message FROM headermessage_workspace WHERE Id_WorkSpace = :workspace";
+        $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':workspace', $IdWorkSpace, PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        return $REQ_SELECT->fetch();
+    }
+
+    public static function GetPermissionForUsers($IdWorkSpace, $EmailUser){
+        $ID_ACCOUNT = self::GetIdAccount($EmailUser);
+        $SQL_SELECT = "SELECT * FROM operator WHERE Id_users = :id_users AND Id_WorkSpace = :workspace";
+        $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':id_users', $ID_ACCOUNT, PDO::PARAM_INT);
+        $REQ_SELECT->bindParam(':workspace', $IdWorkSpace, PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        return $REQ_SELECT->fetch();
     }
 
 
