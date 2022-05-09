@@ -38,6 +38,23 @@ if (isset($_REQUEST['param'])){
             break;
         }
 
+        case 'WorkSpaceEditHeaderMessage':{
+            $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
+            $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+            if ($MemberTest){
+                if ($PermissionUsers[3]) {
+                    $Message = $_POST['messageHeader'];
+                    $IdWorkSpace = $_REQUEST['WorkSpaceAccess'];
+                    $Core->EditHeaderMessageWorkSpace($IdWorkSpace, $Message);
+                    header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $IdWorkSpace);
+                }
+            }
+            else{
+                header('Location: account.php?param=default');
+            }
+            break;
+        }
+
         default:{
             $headerAccount = 'pages/header-account.php';
             $sideBarAccount = 'pages/sidebar-account.php';

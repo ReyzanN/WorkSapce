@@ -76,7 +76,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="">
+                                <form method="post" action="account.php?param=WorkSpaceEditHeaderMessage&WorkSpaceAccess=<?php echo $_REQUEST['WorkSpaceAccess'] ?>">
                                     <div class="mb-3">
                                         <h3 class="text-center"><label for="messageHeader" class="form-label">Message Actuel</label></h3>
                                         <textarea type="text" class="form-control" name="messageHeader" id="messageHeader" aria-describedby="messageHelp"><?php echo $HeaderMessage[0] ?></textarea>

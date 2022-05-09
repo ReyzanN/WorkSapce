@@ -169,6 +169,14 @@ class MainCore{
         return $REQ_SELECT->fetch();
     }
 
+    public function EditHeaderMessageWorkSpace($IdWorkSpace,$Message){
+        $SQL_EDIT = "UPDATE headermessage_workspace SET Message = :Message WHERE Id_WorkSpace = :WorkSpace";
+        $REQ_EDIT = self::$BaseConnect->prepare($SQL_EDIT);
+        $REQ_EDIT->bindParam(':Message', $Message, PDO::PARAM_STR);
+        $REQ_EDIT->bindParam(':WorkSpace', $IdWorkSpace, PDO::PARAM_INT);
+        $REQ_EDIT->execute();
+    }
+
 
 }
 ?>
