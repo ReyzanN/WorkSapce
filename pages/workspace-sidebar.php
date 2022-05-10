@@ -27,7 +27,7 @@
             <?php } ?>
             <?php if ($PermissionUsers[1]){ ?>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="">
+                <a class="nav-link collapsed" href="" data-bs-toggle="modal" data-bs-target="#InviteUser">
                     <i class="bi bi-send"></i>
                     <span>Inviter un utilisateur</span>
                 </a>

@@ -91,8 +91,10 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Faite Par</th>
+                                        <th scope="col">N° WorkSpace</th>
                                         <th scope="col">WorkSpace</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -102,6 +104,7 @@
                                          <tr>
                                              <th scope="row"><a href="#"><?php echo $Request[0] ?></a></th>
                                              <td><?php echo $Request[2]." ".$Request[1] ?></td>
+                                             <td><?php echo $Request[6] ?></td>
                                              <td><a href="#" class="text-primary"><?php echo $Request[3]?></a></td>
                                              <?php if ($Request[5] == 1){?>
                                                  <td><span class="badge bg-danger"><?php echo $Request[4] ?></span></td>
@@ -112,6 +115,8 @@
                                              }elseif ($Request[5] == 3){
                                              ?>
                                              <td><span class="badge bg-warning"><?php echo $Request[4] ?></span></td>
+                                             <?php if ($Request[5] == 3){?><td><a href="account.php?param=AcceptWorkSpaceInvitation&WorkSpaceId=<?php echo $Request[6] ?>&IdInvitation=<?php echo $Request[0]?>"><button class="btn btn-success btn" type="button">Accepter</button></a><?php } ?>
+                                             <?php if ($Request[5] == 3){?><a href="account.php?param=DeniedWorkSpaceInvitation&WorkSpaceId=<?php echo $Request[6] ?>&IdInvitation=<?php echo $Request[0]?>"><button class="btn btn-danger btn" type="button">Refuser</button></a></td><?php } ?>
 
                                          </tr>
                                     <?php

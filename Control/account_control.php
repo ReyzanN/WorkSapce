@@ -27,6 +27,10 @@ if (isset($_REQUEST['param'])){
                 $InfoWorkSpace = $Core->GetNameWorkSpace($_REQUEST['WorkSpaceAccess']);
                 $HeaderMessage = $Core->GetHeaderMessageForWorkSpace($_REQUEST['WorkSpaceAccess']);
                 $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                $OperatorList = $Core->WorkSpaceCountOperator($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                if ($PermissionUsers[1]){
+                    $MembersToInvite = $Core->GetNoMembersForInvitation($_REQUEST['WorkSpaceAccess']);
+                }
                 include ("pages/workspace-header.php");
                 include ("pages/workspace-sidebar.php");
                 include ("pages/workspace-body.php");
@@ -40,8 +44,8 @@ if (isset($_REQUEST['param'])){
 
         case 'WorkSpaceEditHeaderMessage':{
             $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
-            $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
             if ($MemberTest){
+                $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
                 if ($PermissionUsers[3]) {
                     $Message = $_POST['messageHeader'];
                     $IdWorkSpace = $_REQUEST['WorkSpaceAccess'];
@@ -52,6 +56,37 @@ if (isset($_REQUEST['param'])){
             else{
                 header('Location: account.php?param=default');
             }
+            break;
+        }
+
+        case 'WorkSpaceInvitationSend':{
+            $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
+            if ($MemberTest){
+                $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                if ($PermissionUsers[1]){
+                    $IdWorkSpace = $_REQUEST['WorkSpaceAccess'];
+                    $IdUserToInvite = $_POST['MembersToInviteId'];
+                    $Core->SendInvitationToUser($IdWorkSpace,$_SESSION['email'],$IdUserToInvite);
+
+                }
+                header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $IdWorkSpace);
+            }
+            break;
+        }
+
+        case 'AcceptWorkSpaceInvitation':{
+            $IdWorkSpace = $_REQUEST['WorkSpaceId'];
+            $IdInvitation = $_REQUEST['IdInvitation'];
+            $Core->AcceptInvitationForWorkSpace($_SESSION['email'],$IdWorkSpace,$IdInvitation);
+            header('Location: account.php?param=default');
+            break;
+        }
+
+        case 'DeniedWorkSpaceInvitation': {
+            $IdWorkSpace = $_REQUEST['WorkSpaceId'];
+            $IdInvitation = $_REQUEST['IdInvitation'];
+            $Core->DeniedInvitationForWorkSpace($_SESSION['email'],$IdWorkSpace,$IdInvitation);
+            header('Location: account.php?param=default');
             break;
         }
 

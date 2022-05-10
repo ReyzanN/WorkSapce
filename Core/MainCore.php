@@ -99,7 +99,7 @@ class MainCore{
 
     public static function GetInvitationAll($email){
         $ID_ACCOUNT = self::GetIdAccount($email);
-        $SQL_SELECT = "SELECT joinrequest_users.Id_JoinAsk, users.name, users.surname, workspace.Name, joinstatut.Status, joinstatut.Id_JoinStatut FROM joinrequest_users
+        $SQL_SELECT = "SELECT joinrequest_users.Id_JoinAsk, users.name, users.surname, workspace.Name, joinstatut.Status, joinstatut.Id_JoinStatut, joinrequest_users.Id_WorkSpace FROM joinrequest_users
         INNER JOIN users ON users.Id_users = joinrequest_users.Id_users
         INNER JOIN workspace ON workspace.Id_Workspace = joinrequest_users.Id_WorkSpace
         INNER JOIN joinstatut ON joinstatut.Id_JoinStatut = joinrequest_users.Id_JoinStatut
@@ -177,6 +177,55 @@ class MainCore{
         $REQ_EDIT->execute();
     }
 
+    public static function GetNoMembersForInvitation($IdWorkSpace){
+        $SQL_SELECT = "SELECT Id_users, users.name, users.surname FROM users WHERE 
+        users.Id_users NOT IN (SELECT joinrequest_users.Id_users FROM joinrequest_users WHERE Id_JoinStatut IN (2,3) AND Id_WorkSpace = :WorkSpace)";
+        $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        return $REQ_SELECT->fetchAll();
+    }
 
+    public static function SendInvitationToUser($IdWorkSpace,$IdUser, $IdUsersRequested){
+        $IdUser = self::GetIdAccount($IdUser);
+        $SQL_INSERT = "INSERT INTO joinrequest_users VALUES (null, DATE(NOW()), :IdWorkSpace, :IdUsers, :IdRequestedUser, 3);";
+        $REQ_INSERT = self::$BaseConnect->prepare($SQL_INSERT);
+        $REQ_INSERT->bindParam(':IdWorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_INSERT->bindParam(':IdUsers',$IdUser,PDO::PARAM_INT);
+        $REQ_INSERT->bindParam(':IdRequestedUser',$IdUsersRequested,PDO::PARAM_INT);
+        $REQ_INSERT->execute();
+    }
+
+    public static function AcceptInvitationForWorkSpace($EmailUser,$IdWorkSpace, $IdInvitation){
+        $IdUser = self::GetIdAccount($EmailUser);
+        $SQL_EDIT = "UPDATE joinrequest_users SET Id_JoinStatut = 2 WHERE Id_usersRequested = :IdUser AND Id_WorkSpace = :WorkSpace AND Id_JoinAsk = :IdJoinAsk";
+        $REQ_EDIT = self::$BaseConnect->prepare($SQL_EDIT);
+        $REQ_EDIT->bindParam(':IdUser',$IdUser,PDO::PARAM_INT);
+        $REQ_EDIT->bindParam(':WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_EDIT->bindParam(':IdJoinAsk',$IdInvitation,PDO::PARAM_INT);
+        $REQ_EDIT->execute();
+    }
+
+    public static function DeniedInvitationForWorkSpace($EmailUser,$IdWorkSpace, $IdInvitation){
+        $IdUser = self::GetIdAccount($EmailUser);
+        $SQL_EDIT = "UPDATE joinrequest_users SET Id_JoinStatut = 1 WHERE Id_usersRequested = :IdUser AND Id_WorkSpace = :WorkSpace AND Id_JoinAsk = :IdJoinAsk";
+        $REQ_EDIT = self::$BaseConnect->prepare($SQL_EDIT);
+        $REQ_EDIT->bindParam(':IdUser',$IdUser,PDO::PARAM_INT);
+        $REQ_EDIT->bindParam(':WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_EDIT->bindParam(':IdJoinAsk',$IdInvitation,PDO::PARAM_INT);
+        $REQ_EDIT->execute();
+    }
+
+    public static function WorkSpaceCountOperator($IdWorkSpace,$Users){
+        $ID_ACCOUNT = self::GetIdAccount($Users);
+        $SQL_SELECT = "SELECT users.name, users.surname FROM operator
+        INNER JOIN users ON users.Id_users = operator.Id_users
+        WHERE operator.Id_WorkSpace = :WorkSpace AND operator.Id_users = :Users";
+        $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_SELECT->bindParam(':Users',$ID_ACCOUNT,PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        return $REQ_SELECT->fetchAll();
+    }
 }
 ?>
