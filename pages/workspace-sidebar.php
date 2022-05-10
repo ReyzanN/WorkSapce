@@ -24,6 +24,7 @@
                         <span>Modifier le message d'accueil</span>
                     </a>
                 </li>
+                <hr>
             <?php } ?>
             <?php if ($PermissionUsers[1]){ ?>
             <li class="nav-item">
@@ -35,15 +36,16 @@
             <?php } ?>
             <?php if ($PermissionUsers[3]){ ?>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="">
+                    <a class="nav-link collapsed" href="" data-bs-toggle="modal" data-bs-target="#KickUsers">
                         <i class="bi bi-person-x"></i>
                         <span>Expulser un utilisateur</span>
                     </a>
                 </li>
+                <hr>
             <?php } ?>
             <?php if ($PermissionUsers[5]){ ?>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="">
+                    <a class="nav-link collapsed" href="" data-bs-toggle="modal" data-bs-target="#AddTeatcher">
                         <i class="bi bi-person-workspace"></i>
                         <span>Ajouter un professeur</span>
                     </a>
@@ -56,6 +58,25 @@
                         <span>Supprimer un professeur</span>
                     </a>
                 </li>
+                <hr>
+            <?php } ?>
+            <?php if ($PermissionUsers[10]){ ?>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="">
+                        <i class="bi bi-book"></i>
+                        <span>Ajouter une matière</span>
+                    </a>
+                </li>
+            <?php } ?>
+
+            <?php if ($PermissionUsers[9]){ ?>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="">
+                        <i class="bi bi-journal-x"></i>
+                        <span>Supprimer une matière</span>
+                    </a>
+                </li>
+                <hr>
             <?php } ?>
             <?php if ($PermissionUsers[7]){ ?>
                 <li class="nav-item">
@@ -72,6 +93,7 @@
                         <span>Supprimer un opérateur</span>
                     </a>
                 </li>
+                <hr>
             <?php } ?>
             <?php if ($PermissionUsers[8]){ ?>
                 <li class="nav-item">

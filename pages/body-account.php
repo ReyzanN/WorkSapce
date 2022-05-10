@@ -112,15 +112,18 @@
                                              }elseif($Request[5] == 2) { ?>
                                              <td><span class="badge bg-success"><?php echo $Request[4] ?></span></td>
                                              <?php
+                                             }elseif($Request[5] == 4) { ?>
+                                                 <td><span class="badge bg-danger"><?php echo $Request[4] ?></span></td>
+                                             <?php
                                              }elseif ($Request[5] == 3){
                                              ?>
                                              <td><span class="badge bg-warning"><?php echo $Request[4] ?></span></td>
                                              <?php if ($Request[5] == 3){?><td><a href="account.php?param=AcceptWorkSpaceInvitation&WorkSpaceId=<?php echo $Request[6] ?>&IdInvitation=<?php echo $Request[0]?>"><button class="btn btn-success btn" type="button">Accepter</button></a><?php } ?>
                                              <?php if ($Request[5] == 3){?><a href="account.php?param=DeniedWorkSpaceInvitation&WorkSpaceId=<?php echo $Request[6] ?>&IdInvitation=<?php echo $Request[0]?>"><button class="btn btn-danger btn" type="button">Refuser</button></a></td><?php } ?>
-
+                                             <?php } ?>
                                          </tr>
                                     <?php
-                                     }}
+                                     }
                                      ?>
                                     </tbody>
                                 </table>

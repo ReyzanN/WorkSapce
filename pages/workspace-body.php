@@ -55,12 +55,8 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title"> <i class="bi bi-person-workspace"></i> / Nombre de proffesseur sur l'espace</h5>
-                        <p>..</p>
-                        <h6 class="card-title"><i class="bi bi-clipboard"></i> / Proffesseur Référents l'espace : </h6>
-                        <ul>
-                            <p>FOREACH</p>
-                        </ul>
+                        <h5 class="card-title"><i class="bi bi-plus-circle"></i> / Ajouter une ressource sur l'espace</h5>
+                        <button class="btn btn-primary" type="button">Ajouter une ressource</button>
                     </div>
                 </div>
             </div>
@@ -72,8 +68,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title"><i class="bi bi-house-fill"></i> / Ressource de l'espace</h5>
-                        <button class="btn btn-primary" type="button">Ajouter une ressource</button>
+                        <h5 class="card-title"><i class="bi bi-clipboard"></i> / Ressource sur l'espace</h5>
                     </div>
                 </div>
             </div>
@@ -135,6 +130,74 @@
                                         <div id="messageHelp" class="form-text">Attention à qui vous invitez sur l'espace</div>
                                     </div>
                                     <button type="submit" class="btn btn-success">Ok !</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
+            <?php if ($PermissionUsers[3]) { ?>
+                <!-- Modal Kick Users From WorkSpace -->
+                <div class="modal fade" id="KickUsers" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Expulser un utilisateur de l'espace</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nom / Prénom</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <?php
+                                            foreach ($MembersToKick as $MemberKick){
+                                            ?>
+                                            <th scope="row"><?php echo $MemberKick[0] ?></th>
+                                            <td><?php echo $MemberKick[1].' '.$MemberKick[2] ?></td>
+                                            <td><a href="account.php?param=WorkSpaceKickUser&KickPerson=<?php echo $MemberKick[0] ?>&WorkSpaceAccess=<?php echo $_REQUEST['WorkSpaceAccess'] ?>" <button type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></td>
+                                            <?php } ?>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
+            <?php if ($PermissionUsers[5]) { ?>
+                <!-- Modal Add Teatcher -->
+                <div class="modal fade" id="AddTeatcher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Ajouter un proffesseur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="account.php?param=AddTeatcherToWorkSpace&WorkSpaceAccess=<?php echo $_REQUEST['WorkSpaceAccess'] ?>">
+                                    <div class="mb-3">
+                                        <label for="TeatcherHelp" class="form-label">Nom - Prénom du prof à ajouter</label>
+                                        <input type="text" class="form-control" id="TeatcherHelp" aria-describedby="TeatcherHelp" name="TeatcherAdd">
+                                        <div id="TeatcherHelp" class="form-text">Merci de bien vérifier l'orthographe avant l'ajout</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Ajouter</button>
                                 </form>
                             </div>
                             <div class="modal-footer">

@@ -31,6 +31,9 @@ if (isset($_REQUEST['param'])){
                 if ($PermissionUsers[1]){
                     $MembersToInvite = $Core->GetNoMembersForInvitation($_REQUEST['WorkSpaceAccess']);
                 }
+                if ($PermissionUsers[3]){
+                    $MembersToKick = $Core->GetAllMembersForWorkSpace($_REQUEST['WorkSpaceAccess']);
+                }
                 include ("pages/workspace-header.php");
                 include ("pages/workspace-sidebar.php");
                 include ("pages/workspace-body.php");
@@ -74,6 +77,20 @@ if (isset($_REQUEST['param'])){
             break;
         }
 
+        case 'WorkSpaceKickUser':{
+            $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
+            if ($MemberTest){
+                $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                if ($PermissionUsers[3]){
+                    $IdToKick = $_REQUEST['KickPerson'];
+                    $WorkSpace = $_REQUEST['WorkSpaceAccess'];
+                    $Core->KickUserFromWorkSpace($_REQUEST['WorkSpaceAccess'],$IdToKick);
+                    header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $IdWorkSpace);
+                }
+            }
+            break;
+        }
+
         case 'AcceptWorkSpaceInvitation':{
             $IdWorkSpace = $_REQUEST['WorkSpaceId'];
             $IdInvitation = $_REQUEST['IdInvitation'];
@@ -87,6 +104,18 @@ if (isset($_REQUEST['param'])){
             $IdInvitation = $_REQUEST['IdInvitation'];
             $Core->DeniedInvitationForWorkSpace($_SESSION['email'],$IdWorkSpace,$IdInvitation);
             header('Location: account.php?param=default');
+            break;
+        }
+
+        case 'AddTeatcherToWorkSpace':{
+            $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
+            if ($MemberTest){
+                $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                if ($PermissionUsers[5]) {
+                    $Core->AddTeatcherToWorkSpace($_REQUEST['WorkSpaceAccess'], $_POST['TeatcherAdd']);
+                    header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $_REQUEST['WorkSpaceAccess']);
+                }
+            }
             break;
         }
 

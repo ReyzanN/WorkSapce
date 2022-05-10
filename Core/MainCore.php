@@ -179,7 +179,7 @@ class MainCore{
 
     public static function GetNoMembersForInvitation($IdWorkSpace){
         $SQL_SELECT = "SELECT Id_users, users.name, users.surname FROM users WHERE 
-        users.Id_users NOT IN (SELECT joinrequest_users.Id_users FROM joinrequest_users WHERE Id_JoinStatut IN (2,3) AND Id_WorkSpace = :WorkSpace)";
+        users.Id_users NOT IN (SELECT joinrequest_users.Id_usersRequested FROM joinrequest_users WHERE Id_JoinStatut  IN (2,3) AND Id_WorkSpace = 1)";
         $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
         $REQ_SELECT->bindParam(':WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
         $REQ_SELECT->execute();
@@ -226,6 +226,36 @@ class MainCore{
         $REQ_SELECT->bindParam(':Users',$ID_ACCOUNT,PDO::PARAM_INT);
         $REQ_SELECT->execute();
         return $REQ_SELECT->fetchAll();
+    }
+
+    public static function AddTeatcherToWorkSpace($IdWorkSpace,$TeatcherName){
+        $SQL_INSERT = "INSERT INTO teatcher VALUES (null, :Teatcher, :WorkSpace)";
+        $REQ_INSERT = self::$BaseConnect->prepare($SQL_INSERT);
+        $REQ_INSERT->bindParam(':Teatcher',$TeatcherName,PDO::PARAM_STR);
+        $REQ_INSERT->bindParam('WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_INSERT->execute();
+    }
+
+    public static function GetAllMembersForWorkSpace($IdWorkSpace){
+        $ID_JOINSTAT = 2;
+        $SQL_SELECT = "SELECT joinrequest_users.Id_JoinAsk, users.name, users.surname FROM joinrequest_users 
+        INNER JOIN users ON users.Id_users = joinrequest_users.Id_usersRequested                                                      
+        WHERE joinrequest_users.Id_JoinStatut = :IdStatJoin AND Id_WorkSpace = :IdWorkSpace";
+        $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':IdStatJoin',$ID_JOINSTAT,PDO::PARAM_INT);
+        $REQ_SELECT->bindParam(':IdWorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        return $REQ_SELECT->fetchAll();
+    }
+
+    public static function KickUserFromWorkSpace($IdWorkSpace,$IdInvitation){
+        $KickedUser = 4;
+        $SQL_UPDATE = "UPDATE joinrequest_users SET Id_JoinStatut = :KickId WHERE Id_JoinAsk = :IdInvitation AND Id_WorkSpace = :WorkSpace";
+        $REQ_UPDATE = self::$BaseConnect->prepare($SQL_UPDATE);
+        $REQ_UPDATE->bindParam(':KickId',$KickedUser,PDO::PARAM_INT);
+        $REQ_UPDATE->bindParam(':IdInvitation',$IdInvitation,PDO::PARAM_INT);
+        $REQ_UPDATE->bindParam(':WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_UPDATE->execute();
     }
 }
 ?>
