@@ -257,5 +257,22 @@ class MainCore{
         $REQ_UPDATE->bindParam(':WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
         $REQ_UPDATE->execute();
     }
+
+    public static function GetAllTeatcherFroWorkSpace($IdWorkSpace){
+        $SQL_SELECT = "SELECT IdTeatcher, TeacherName FROM teatcher WHERE Id_WorkSpace = :IdWorkSpace";
+        $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':IdWorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        return $REQ_SELECT->fetchAll();
+    }
+
+    public static function RemoveTeatcherFromWorkSapce($IdTeatcher,$IdWorkSpace){
+        $SQL_DELETE = "DELETE FROM teatcher WHERE IdTeatcher = :Teatcher AND Id_WorkSpace = :IdWorkSpace";
+        echo $SQL_DELETE;
+        $REQ_DELETE = self::$BaseConnect->prepare($SQL_DELETE);
+        $REQ_DELETE->bindParam(':Teatcher',$IdTeatcher,PDO::PARAM_INT);
+        $REQ_DELETE->bindParam(':IdWorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_DELETE->execute();
+    }
 }
 ?>

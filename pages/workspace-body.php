@@ -187,7 +187,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Ajouter un proffesseur</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Ajouter un professeur</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -198,6 +198,38 @@
                                         <div id="TeatcherHelp" class="form-text">Merci de bien vérifier l'orthographe avant l'ajout</div>
                                     </div>
                                     <button type="submit" class="btn btn-success">Ajouter</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
+            <?php if ($PermissionUsers[6]) { ?>
+                <!-- Modal Add Teatcher -->
+                <div class="modal fade" id="RemoveTeatcher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Supprimer un professeur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="account.php?param=RemoveTeatcherFromWorkSpce&WorkSpaceAccess=<?php echo $_REQUEST['WorkSpaceAccess'] ?>">
+                                    <div class="mb-3">
+                                        <label>
+                                            <select class="form-select" aria-label="Selection Du Professeur à supprimer" name="TeatcherToRemove">
+                                                <?php foreach ($TeactcherRemove as $Teatcher){
+                                                    ?>
+                                                <option value="<?php echo $Teatcher[0]?>"><?php echo $Teatcher[1]?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
                                 </form>
                             </div>
                             <div class="modal-footer">

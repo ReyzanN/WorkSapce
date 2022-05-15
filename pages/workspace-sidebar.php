@@ -53,7 +53,7 @@
             <?php } ?>
             <?php if ($PermissionUsers[6]){ ?>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="">
+                    <a class="nav-link collapsed" href="" data-bs-toggle="modal" data-bs-target="#RemoveTeatcher">
                         <i class="bi bi-person-dash-fill"></i>
                         <span>Supprimer un professeur</span>
                     </a>

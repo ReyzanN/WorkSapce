@@ -34,6 +34,9 @@ if (isset($_REQUEST['param'])){
                 if ($PermissionUsers[3]){
                     $MembersToKick = $Core->GetAllMembersForWorkSpace($_REQUEST['WorkSpaceAccess']);
                 }
+                if ($PermissionUsers[6]){
+                    $TeactcherRemove = $Core->GetAllTeatcherFroWorkSpace($_REQUEST['WorkSpaceAccess']);
+                }
                 include ("pages/workspace-header.php");
                 include ("pages/workspace-sidebar.php");
                 include ("pages/workspace-body.php");
@@ -113,6 +116,18 @@ if (isset($_REQUEST['param'])){
                 $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
                 if ($PermissionUsers[5]) {
                     $Core->AddTeatcherToWorkSpace($_REQUEST['WorkSpaceAccess'], $_POST['TeatcherAdd']);
+                    header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $_REQUEST['WorkSpaceAccess']);
+                }
+            }
+            break;
+        }
+
+        case 'RemoveTeatcherFromWorkSpce':{
+            $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
+            if ($MemberTest){
+                $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                if ($PermissionUsers[6]){
+                    $Core->RemoveTeatcherFromWorkSapce($_POST['TeatcherToRemove'],$_REQUEST['WorkSpaceAccess']);
                     header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $_REQUEST['WorkSpaceAccess']);
                 }
             }
