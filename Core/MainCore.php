@@ -274,5 +274,29 @@ class MainCore{
         $REQ_DELETE->bindParam(':IdWorkSpace',$IdWorkSpace,PDO::PARAM_INT);
         $REQ_DELETE->execute();
     }
+
+    public static function AddDiscipline($IdWorkSpace,$Name){
+        $SQL_INSERT = "INSERT INTO discipline VALUES (null, :name, :Id_WorkSpace)";
+        $REQ_INSERT = self::$BaseConnect->prepare($SQL_INSERT);
+        $REQ_INSERT->bindParam(':name',$Name,PDO::PARAM_STR);
+        $REQ_INSERT->bindParam(':Id_WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_INSERT->execute();
+    }
+
+    public static function GetAllDiscipline($IdWorkSpace){
+        $SQL_SELECT = "SELECT Id_discipline, name FROM discipline WHERE Id_WorkSpace = :IdWorkSpace";
+        $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':IdWorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        return $REQ_SELECT->fetchAll();
+    }
+
+    public static function RemoveDiscipline($IdWorkSpace,$IdDiscipline){
+        $SQL_DELETE = "DELETE FROM discipline WHERE Id_discipline = :IdDiscipline AND Id_WorkSpace = :IdWorkSpace";
+        $REQ_DELETE = self::$BaseConnect->prepare($SQL_DELETE);
+        $REQ_DELETE->bindParam(':IdWorkSpace', $IdWorkSpace,PDO::PARAM_INT);
+        $REQ_DELETE->bindParam(':IdDiscipline', $IdDiscipline,PDO::PARAM_INT);
+        $REQ_DELETE->execute();
+    }
 }
 ?>

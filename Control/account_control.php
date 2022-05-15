@@ -35,7 +35,10 @@ if (isset($_REQUEST['param'])){
                     $MembersToKick = $Core->GetAllMembersForWorkSpace($_REQUEST['WorkSpaceAccess']);
                 }
                 if ($PermissionUsers[6]){
-                    $TeactcherRemove = $Core->GetAllTeatcherFroWorkSpace($_REQUEST['WorkSpaceAccess']);
+                    $TeatcherList = $Core->GetAllTeatcherFroWorkSpace($_REQUEST['WorkSpaceAccess']);
+                }
+                if ($PermissionUsers[9]){
+                    $DisciplineList = $Core->GetAllDiscipline($_REQUEST['WorkSpaceAccess']);
                 }
                 include ("pages/workspace-header.php");
                 include ("pages/workspace-sidebar.php");
@@ -132,6 +135,29 @@ if (isset($_REQUEST['param'])){
                 }
             }
             break;
+        }
+
+        case 'WorkSpaceAddDiscipline':{
+            $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
+            if ($MemberTest){
+                $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                if ($PermissionUsers[10]){
+                    $Core->AddDiscipline($_REQUEST['WorkSpaceAccess'],$_POST['DisciplineName']);
+                    header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $_REQUEST['WorkSpaceAccess']);
+                }
+            }
+            break;
+        }
+
+        case 'WorkSpaceRemoveDiscipline':{
+            $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
+            if ($MemberTest){
+                $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                if ($PermissionUsers[9]){
+                    $Core->RemoveDiscipline($_REQUEST['WorkSpaceAccess'],$_POST['RemoveDiscipline']);
+                    header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $_REQUEST['WorkSpaceAccess']);
+                }
+            }
         }
 
         default:{

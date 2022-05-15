@@ -62,7 +62,7 @@
             <?php } ?>
             <?php if ($PermissionUsers[10]){ ?>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="">
+                    <a class="nav-link collapsed" href="" data-bs-toggle="modal" data-bs-target="#AddDiscipline">
                         <i class="bi bi-book"></i>
                         <span>Ajouter une matière</span>
                     </a>
@@ -71,7 +71,7 @@
 
             <?php if ($PermissionUsers[9]){ ?>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="">
+                    <a class="nav-link collapsed" href="" data-bs-toggle="modal" data-bs-target="#RemoveDiscipline">
                         <i class="bi bi-journal-x"></i>
                         <span>Supprimer une matière</span>
                     </a>

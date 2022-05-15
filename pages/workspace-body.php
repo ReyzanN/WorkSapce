@@ -56,7 +56,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title"><i class="bi bi-plus-circle"></i> / Ajouter une ressource sur l'espace</h5>
-                        <button class="btn btn-primary" type="button">Ajouter une ressource</button>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#AddFiles">Ajouter une ressource</button>
                     </div>
                 </div>
             </div>
@@ -69,6 +69,72 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title"><i class="bi bi-clipboard"></i> / Ressource sur l'espace</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Add File -->
+        <div class="modal fade" id="AddFiles" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Ajouter une ressource</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="account.php?param=RemoveTeatcherFromWorkSpce&WorkSpaceAccess=<?php echo $_REQUEST['WorkSpaceAccess'] ?>">
+
+                            <div class="mb-3">
+                                <label for="titleRessource" class="form-label">Titre de la ressource :</label>
+                                <input type="text" class="form-control" id="titleRessource" aria-describedby="RessourceHelp">
+                                <div id="RessourceHelp" class="form-text">Merci de choisir un titre cohérent</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Professeur en lien avec la ressource :</label>
+                                <label>
+                                    <select class="form-select" aria-label="Selection Du Professeur à supprimer" name="TeatcherToRemove">
+                                        <?php foreach ($TeatcherList as $Teatcher){
+                                            ?>
+                                            <option value="<?php echo $Teatcher[0]?>"><?php echo $Teatcher[1]?></option>
+                                        <?php } ?>
+                                    </select>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Matière en lien avec la ressource :</label>
+                                <label>
+                                    <select class="form-select" aria-label="Selection Du Professeur à supprimer" name="TeatcherToRemove">
+                                        <?php foreach ($DisciplineList as $Discipline){
+                                            ?>
+                                            <option value="<?php echo $Discipline[0]?>"><?php echo $Discipline[1]?></option>
+                                        <?php } ?>
+                                    </select>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <textarea id="editor"></textarea>
+                                <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+                                <script>
+                                    CKEDITOR.replace( 'editor' );
+                                </script>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="formFileMultiple" class="form-label">Fichier associés</label>
+                                <input class="form-control" type="file" id="formFileMultiple" multiple aria-describedby="UploadFiles">
+                                <div id="UploadFiles" class="form-text">Fichier au format PDF uniquement</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Ajouter !</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
                     </div>
                 </div>
             </div>
@@ -209,7 +275,7 @@
             <?php } ?>
 
             <?php if ($PermissionUsers[6]) { ?>
-                <!-- Modal Add Teatcher -->
+                <!-- Modal Remove Teatcher -->
                 <div class="modal fade" id="RemoveTeatcher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -222,9 +288,68 @@
                                     <div class="mb-3">
                                         <label>
                                             <select class="form-select" aria-label="Selection Du Professeur à supprimer" name="TeatcherToRemove">
-                                                <?php foreach ($TeactcherRemove as $Teatcher){
+                                                <?php foreach ($TeatcherList as $Teatcher){
                                                     ?>
                                                 <option value="<?php echo $Teatcher[0]?>"><?php echo $Teatcher[1]?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
+            <?php if ($PermissionUsers[10]) { ?>
+                <!-- Modal Add Discipline -->
+                <div class="modal fade" id="AddDiscipline" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Ajouter une matière</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="account.php?param=WorkSpaceAddDiscipline&WorkSpaceAccess=<?php echo $_REQUEST['WorkSpaceAccess'] ?>">
+                                    <div class="mb-3">
+                                        <label for="DisciplineName" class="form-label">Nom de la matière à ajouter</label>
+                                        <input type="text" class="form-control" id="DisciplineName" aria-describedby="DisciplineName" name="DisciplineName">
+                                        <div id="DisciplineName" class="form-text">Merci de bien vérifier l'orthographe avant l'ajout</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Ajouter</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
+            <?php if ($PermissionUsers[9]) { ?>
+                <!-- Modal Remove Discipline -->
+                <div class="modal fade" id="RemoveDiscipline" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Supprimer une matière</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="account.php?param=WorkSpaceRemoveDiscipline&WorkSpaceAccess=<?php echo $_REQUEST['WorkSpaceAccess'] ?>">
+                                    <div class="mb-3">
+                                        <label>
+                                            <select class="form-select" aria-label="Selection Matière à supprimer" name="RemoveDiscipline">
+                                                <?php foreach ($DisciplineList as $Discipline){
+                                                    ?>
+                                                    <option value="<?php echo $Discipline[0]?>"><?php echo $Discipline[1]?></option>
                                                 <?php } ?>
                                             </select>
                                         </label>
