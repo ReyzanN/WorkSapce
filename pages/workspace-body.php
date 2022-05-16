@@ -69,11 +69,93 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title"><i class="bi bi-clipboard"></i> / Ressource sur l'espace</h5>
+                        <hr>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Matière</th>
+                                <th scope="col">Prof</th>
+                                <th scope="col">Accès</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                        <?php foreach ($RessourcesList as $Ressource){ ?>
+                                <tr>
+                                    <th scope="row"><?php echo $Ressource[0]?></th>
+                                    <td><?php echo $Ressource[1]?></td>
+                                    <td><?php echo $Ressource[7]?></td>
+                                    <td><?php echo $Ressource[8]?></td>
+                                    <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ViewFile<?php echo $Ressource[0]?>">Accès ressource</button></td>
+                                </tr>
+                        <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Modal View File -->
+        <?php foreach ($RessourcesList as $Ressource){ ?>
+        <div class="modal fade" id="ViewFile<?php echo $Ressource[0]?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Consultation de ressource</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                            <div class="mb-3">
+                                <label for="titleRessource" class="form-label">Titre de la ressource :</label>
+                               <input disabled value="<?php echo $Ressource[1]?>">
+                            </div>
+
+                            <hr>
+
+                            <div class="mb-3">
+                                <label class="form-label">Professeur en lien avec la ressource :</label>
+                                <input disabled value="<?php echo $Ressource[8]?>">
+                            </div>
+
+                            <hr>
+
+                            <div class="mb-3">
+                                <label class="form-label">Matière en lien avec la ressource :</label>
+                                <input disabled value="<?php echo $Ressource[7]?>">
+                            </div>
+
+                            <hr>
+
+                            <div class="mb-3">
+                                <label class="form-label">Coprs de la ressource : </label>
+                                <div class="View">
+                                    <?php echo $Ressource[2]?>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="mb-3">
+                                <label for="formFileMultiple" class="form-label">Fichier associés : </label>
+                                <?php for ($Files = 0; $Ressource[3] != $Files ; $Files++) {?>
+                                    <div class="alert alert-primary" role="alert">
+                                        <a href="files/<?php echo $Ressource[1].'-'.$Ressource[4].'/'.$Files.'-'.$Ressource[1] ?>.pdf">Ressource N°<?php echo $Files ?></a>
+                                    </div>
+                                <?php } ?>
+                            </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">J'ai terminé !</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php } ?>
+        <!-- END VIEW FILE -->
 
         <!-- Modal Add File -->
         <div class="modal fade" id="AddFiles" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -84,18 +166,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="account.php?param=RemoveTeatcherFromWorkSpce&WorkSpaceAccess=<?php echo $_REQUEST['WorkSpaceAccess'] ?>">
+                        <form method="post" action="account.php?param=AddRessourcesToWorkSpace&WorkSpaceAccess=<?php echo $_REQUEST['WorkSpaceAccess'] ?>" enctype="multipart/form-data">
 
                             <div class="mb-3">
                                 <label for="titleRessource" class="form-label">Titre de la ressource :</label>
-                                <input type="text" class="form-control" id="titleRessource" aria-describedby="RessourceHelp">
+                                <input type="text" class="form-control" id="titleRessource" aria-describedby="RessourceHelp" name="titleRessource">
                                 <div id="RessourceHelp" class="form-text">Merci de choisir un titre cohérent</div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Professeur en lien avec la ressource :</label>
                                 <label>
-                                    <select class="form-select" aria-label="Selection Du Professeur à supprimer" name="TeatcherToRemove">
+                                    <select class="form-select" aria-label="Selection Du Professeur à supprimer" name="TeatcherId">
                                         <?php foreach ($TeatcherList as $Teatcher){
                                             ?>
                                             <option value="<?php echo $Teatcher[0]?>"><?php echo $Teatcher[1]?></option>
@@ -107,7 +189,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Matière en lien avec la ressource :</label>
                                 <label>
-                                    <select class="form-select" aria-label="Selection Du Professeur à supprimer" name="TeatcherToRemove">
+                                    <select class="form-select" aria-label="Selection Du Professeur à supprimer" name="DisciplineId">
                                         <?php foreach ($DisciplineList as $Discipline){
                                             ?>
                                             <option value="<?php echo $Discipline[0]?>"><?php echo $Discipline[1]?></option>
@@ -117,7 +199,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <textarea id="editor"></textarea>
+                                <textarea id="editor" name="Content"></textarea>
                                 <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
                                 <script>
                                     CKEDITOR.replace( 'editor' );
@@ -126,7 +208,7 @@
 
                             <div class="mb-3">
                                 <label for="formFileMultiple" class="form-label">Fichier associés</label>
-                                <input class="form-control" type="file" id="formFileMultiple" multiple aria-describedby="UploadFiles">
+                                <input class="form-control" type="file" id="Uploads" multiple aria-describedby="UploadFiles" name="uploads[]">
                                 <div id="UploadFiles" class="form-text">Fichier au format PDF uniquement</div>
                             </div>
 
@@ -139,6 +221,7 @@
                 </div>
             </div>
         </div>
+        <!-- END ADD FILES -->
 
 
         <?php if ($PermissionUsers){ ?>

@@ -298,5 +298,45 @@ class MainCore{
         $REQ_DELETE->bindParam(':IdDiscipline', $IdDiscipline,PDO::PARAM_INT);
         $REQ_DELETE->execute();
     }
+
+    public static function AddRessourceToWorkSapce($Files){
+        $CountContent = Count($_FILES['uploads']['name']);
+        if ($CountContent >= 1){
+            $Folder = "files/";
+            $FolderName = $_POST['titleRessource'].'-'.$_POST['DisciplineId'];
+            mkdir($Folder.$FolderName);
+            for ($NumberFiles = 0 ; $NumberFiles < $CountContent ; $NumberFiles++){
+                $FileInfo = pathinfo($_FILES['uploads']['name'][$NumberFiles]);
+                $ExtentioFiles = ".pdf";
+                $NewFileName = $NumberFiles.'-'.$_POST['titleRessource'].$ExtentioFiles;
+                if ($FileInfo['extension'] == "application/pdf ") {
+                    move_uploaded_file($_FILES['uploads']['tmp_name'][$NumberFiles], $Folder . '/' . $FolderName . '/' . $NewFileName);
+                }
+            }
+        }
+    }
+
+    public static function AddRessourcesToWorkSpace($IdWorkSpace, $IdDiscipline, $IdTeatcher, $FileAttatched, $Content, $Name){
+        $SQL_INSERT = "INSERT INTO files VALUES (null, :Name, :Content, :Files, :Dicsipline, :WorkSpace, :Teatcher)";
+        $REQ_INSERT = self::$BaseConnect->prepare($SQL_INSERT);
+        $REQ_INSERT->bindParam(':Name',$Name,PDO::PARAM_STR);
+        $REQ_INSERT->bindParam(':Content',$Content,PDO::PARAM_STR);
+        $REQ_INSERT->bindParam(':Files',$FileAttatched,PDO::PARAM_INT);
+        $REQ_INSERT->bindParam(':Dicsipline',$IdDiscipline,PDO::PARAM_INT);
+        $REQ_INSERT->bindParam(':WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_INSERT->bindParam(':Teatcher',$IdTeatcher,PDO::PARAM_INT);
+        $REQ_INSERT->execute();
+    }
+
+    public static function GetAllRessourceForWorkSpace($IdWorkSpace){
+        $SQL_SELECT = "SELECT files.*, discipline.name, teatcher.TeacherName FROM files 
+        INNER JOIN discipline ON discipline.Id_discipline = files.Id_discipline
+        INNER JOIN teatcher ON teatcher.IdTeatcher = files.IdTeatcher
+        WHERE files.Id_WorkSpace = :WorkSpace";
+        $REQ_SELECT = self::$BaseConnect->prepare($SQL_SELECT);
+        $REQ_SELECT->bindParam(':WorkSpace',$IdWorkSpace,PDO::PARAM_INT);
+        $REQ_SELECT->execute();
+        return $REQ_SELECT->fetchAll();
+    }
 }
 ?>

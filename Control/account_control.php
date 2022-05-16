@@ -28,6 +28,7 @@ if (isset($_REQUEST['param'])){
                 $HeaderMessage = $Core->GetHeaderMessageForWorkSpace($_REQUEST['WorkSpaceAccess']);
                 $PermissionUsers = $Core->GetPermissionForUsers($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
                 $OperatorList = $Core->WorkSpaceCountOperator($_REQUEST['WorkSpaceAccess'], $_SESSION['email']);
+                $RessourcesList = $Core->GetAllRessourceForWorkSpace($_REQUEST['WorkSpaceAccess']);
                 if ($PermissionUsers[1]){
                     $MembersToInvite = $Core->GetNoMembersForInvitation($_REQUEST['WorkSpaceAccess']);
                 }
@@ -158,6 +159,30 @@ if (isset($_REQUEST['param'])){
                     header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $_REQUEST['WorkSpaceAccess']);
                 }
             }
+            break;
+        }
+
+        case 'AddRessourcesToWorkSpace' : {
+            $MemberTest = $Core->IsMemberOfWorkSpace($_REQUEST['WorkSpaceAccess'],$_SESSION['email']);
+            if ($MemberTest){
+                $CountContent = Count($_FILES['uploads']['name']);
+                if ($CountContent >= 1){
+                    $Folder = "files/";
+                    $FolderName = $_POST['titleRessource'].'-'.$_POST['DisciplineId'];
+                    mkdir($Folder.$FolderName);
+                    for ($NumberFiles = 0 ; $NumberFiles < $CountContent ; $NumberFiles++){
+                        $FileInfo = pathinfo($_FILES['uploads']['name'][$NumberFiles]);
+                        $ExtentioFiles = ".pdf";
+                        $NewFileName = $NumberFiles.'-'.$_POST['titleRessource'].$ExtentioFiles;
+                        if ($_FILES['uploads']['type'][$NumberFiles] == "application/pdf") {
+                            move_uploaded_file($_FILES['uploads']['tmp_name'][$NumberFiles], $Folder . '/' . $FolderName . '/' . $NewFileName);
+                        }
+                    }
+                }
+                $Core->AddRessourcesToWorkSpace($_REQUEST['WorkSpaceAccess'], $_POST['DisciplineId'], $_POST['TeatcherId'], $CountContent, $_POST['Content'], $_POST['titleRessource']);
+                header('Location: account.php?param=WorkSpace&WorkSpaceAccess=' . $_REQUEST['WorkSpaceAccess']);
+            }
+            break;
         }
 
         default:{
