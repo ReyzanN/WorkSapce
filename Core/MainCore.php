@@ -86,7 +86,7 @@ class MainCore{
         $SQL_SELECT_INFO = "SELECT joinrequest_users.Id_WorkSpace, workspace.Name, users.name, users.surname, joinrequest_users.DateJoin FROM joinrequest_users
         INNER JOIN workspace ON workspace.Id_WorkSpace = joinrequest_users.Id_WorkSpace
         INNER JOIN owner ON owner.Id_WorkSpace = joinrequest_users.Id_WorkSpace
-        INNER JOIN users ON users.Id_users = owner.Id_WorkSpace
+        INNER JOIN users ON users.Id_users = owner.Id_users
         WHERE joinrequest_users.Id_usersRequested = $ID_ACCOUNT[0] AND joinrequest_users.Id_JoinStatut = 2;";
         $REQ_SELECT_INFO = MainCore::$BaseConnect->query($SQL_SELECT_INFO);
         if ($REQ_SELECT_INFO){
@@ -299,6 +299,8 @@ class MainCore{
         $REQ_DELETE->execute();
     }
 
+
+    // A adapter en fonction
     public static function AddRessourceToWorkSapce($Files){
         $CountContent = Count($_FILES['uploads']['name']);
         if ($CountContent >= 1){
@@ -309,7 +311,7 @@ class MainCore{
                 $FileInfo = pathinfo($_FILES['uploads']['name'][$NumberFiles]);
                 $ExtentioFiles = ".pdf";
                 $NewFileName = $NumberFiles.'-'.$_POST['titleRessource'].$ExtentioFiles;
-                if ($FileInfo['extension'] == "application/pdf ") {
+                if ($_FILES['uploads']['type'][$NumberFiles] == "application/pdf") {
                     move_uploaded_file($_FILES['uploads']['tmp_name'][$NumberFiles], $Folder . '/' . $FolderName . '/' . $NewFileName);
                 }
             }
